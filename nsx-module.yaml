@@ -1,0 +1,57 @@
+schema_version: 1
+
+module:
+  name: nsx-nanopb
+  type: runtime
+  version: "0.4.9.1"
+
+support:
+  ambiqsuite: true
+  zephyr: false
+
+summary: >
+  Vendored nanopb v0.4.9.1 — a small, zero-dynamic-memory Protocol Buffers
+  implementation in ANSI C. Provides pb_encode / pb_decode for structured
+  message serialisation over any transport (USB, UART, SPI, etc.).
+  Pre-generated .pb.c/.pb.h files produced from .proto schemas are compiled
+  into the application target; this module supplies only the runtime library.
+
+capabilities:
+  - protobuf
+  - serialisation
+  - rpc_framing
+  - zero_dynamic_memory
+
+use_cases:
+  - structured USB RPC messages
+  - sensor data serialisation
+  - host-device binary protocol
+  - AI demo structured inference requests/responses
+
+agent_keywords:
+  - nanopb
+  - protobuf
+  - proto
+  - rpc
+  - serialisation
+  - encoding
+  - binary protocol
+
+license:
+  type: zlib
+  upstream: https://github.com/nanopb/nanopb
+  note: >
+    nanopb is distributed under the Zlib license.
+    Sources vendored from https://github.com/nanopb/nanopb tag 0.4.9.1.
+
+build:
+  cmake:
+    targets:
+      - nsx::nanopb
+
+depends:
+  required: []
+  optional: []
+
+socs:
+  - "*"
