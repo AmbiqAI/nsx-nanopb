@@ -10,6 +10,10 @@
 
 cmake_minimum_required(VERSION 3.20)
 
+if(NOT DEFINED NSX_BOARD_FLAGS_TARGET)
+    message(FATAL_ERROR "NSX_BOARD_FLAGS_TARGET is not defined – include a board.cmake first.")
+endif()
+
 add_library(nsx_nanopb STATIC
     ${CMAKE_CURRENT_LIST_DIR}/src/pb_common.c
     ${CMAKE_CURRENT_LIST_DIR}/src/pb_encode.c
@@ -17,6 +21,9 @@ add_library(nsx_nanopb STATIC
 )
 set_target_properties(nsx_nanopb PROPERTIES EXPORT_NAME nanopb)
 add_library(nsx::nanopb ALIAS nsx_nanopb)
+
+# Inherit board-specific arch flags (cpu, thumb, float ABI, etc.).
+target_link_libraries(nsx_nanopb PUBLIC ${NSX_BOARD_FLAGS_TARGET})
 
 # Disable dynamic memory allocation — the whole point of using nanopb on
 # a microcontroller.  Applications can override this on their own target if
